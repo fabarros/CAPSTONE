@@ -8,6 +8,12 @@ peso_tiempo_0 = 0.2
 peso_tiempo_2 = 0.4
 peso_tiempo_3 = 0.4
 
+# tiempos laborales
+tiempo_h1 = {"bloques": 53,"dias_sin_trabajar": 2}
+tiempo_h2 = {"bloques": 53,"dias_sin_trabajar": 1}
+tiempo_h3 = {"bloques": 53,"dias_sin_trabajar": 2}
+
+
 # parámetros de poissons
 lambda_poisson_h1 = {"grd1": 5,
                      "grd2": 5,

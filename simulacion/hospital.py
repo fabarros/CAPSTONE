@@ -11,9 +11,10 @@ from copy import copy
 
 
 class Hospital:
-    def __init__(self, recursos, tasas):
+    def __init__(self, recursos, tasas, tiempos):
         self.recursos = recursos
         self.tasas = tasas
+        self.tiempos = tiempos
         self.calendario = None
         self.n_pacientes_atendidos = {"GRD1": 0, "GRD2": 0, "GRD3": 0, "GRD4": 0, "GRD5": 0, "GRD6": 0, "GRD7": 0,
                                       "GRD8": 0, "GRD9": 0, "GRD10": 0}
@@ -45,13 +46,14 @@ class Hospital:
             self.sillones.append(sillon)
 
             # Se crean todas los bloques
-        for i in range(1, 53):  # existen 53 semanas por año
-            for j in range(1, 6):  # existen 5 dias de trabajo por semana
-                for k in range(1, 51):  # existen 51 bloques de a 15 minutos por dia (hasta las 20:45-21:00 hrs)
+        for i in range(1, 54):  # existen 53 semanas por año
+            for j in range(1, 8 - self.tiempos["dias_sin_trabajar"]):  # existen 5 dias de trabajo por semana
+                for k in range(self.tiempos["bloques"]):  # existen 51 bloques de a 15 minutos por dia (hasta las 20:45-21:00 hrs)
                     calendario.append(inicio)
                     inicio += timedelta(minutes=15)
-                inicio += timedelta(hours=11)
-            inicio += timedelta(days=2)
+                inicio += timedelta(days=1)
+                inicio -= timedelta(minutes=self.tiempos["bloques"]*15)
+            inicio += timedelta(days=self.tiempos["dias_sin_trabajar"])
         asignacion = {}
         for f in calendario:
             asignacion[str(f)] = {"sillones_desocupados": copy(self.sillones),
@@ -160,9 +162,9 @@ class Hospital:
 
 
 if __name__ == "__main__":
-    h1 = Hospital(recursos_h2, lambda_poisson_h2)
+    h1 = Hospital(recursos_h2, lambda_poisson_h2, tiempo_h2)
     print("ESTOS SON LOS RECURSOS DEL HOSPITAL:")
-    print("CALEDARIO:\n", h1.calendario, len(h1.calendario))
+    print("CALEDARIO:\n", h1.calendario.keys(), len(h1.calendario))
     print("ENFERMERAS:\n", h1.enfermeras, len(h1.enfermeras))
     print("SILLONES:\n", h1.sillones, len(h1.sillones))
     h1.llegadas_semana()
