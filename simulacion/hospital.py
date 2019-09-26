@@ -32,8 +32,6 @@ class Hospital:
         return None
 
     def crear_calendario_recursos(self):
-        inicio = datetime(2020, 1, 1, 8, 0)  # comenzamos el calendario el 1 de enero del 2020 a las 8:00
-        calendario = []  # creamos lista de calendario vacía
 
         # Se crean las enfermeras del Hospital
         for e in range(self.recursos["enfermeras"]):
@@ -46,18 +44,25 @@ class Hospital:
             self.sillones.append(sillon)
 
             # Se crean todas los bloques
+
+        inicio = datetime(2020, 1, 1, 8, 0)  # comenzamos el calendario el 1 de enero del 2020 a las 8:00
+        calendario = []  # creamos lista de calendario vacía
+        asignacion = {}
         for i in range(1, 54):  # existen 53 semanas por año
             for j in range(1, 8 - self.tiempos["dias_sin_trabajar"]):  # existen 5 dias de trabajo por semana
-                for k in range(self.tiempos["bloques"]):  # existen 51 bloques de a 15 minutos por dia (hasta las 20:45-21:00 hrs)
-                    calendario.append(inicio)
+                s = copy(self.sillones)
+                e = copy(self.enfermeras)
+                for k in range(self.tiempos["bloques"]): # existen 51 bloques de a 15 minutos por dia (hasta las 20:45-21:00 hrs)
+                    asignacion[str(inicio)] = {"sillones_desocupados": s,
+                                               "enfermeras_desocupadas": e}
                     inicio += timedelta(minutes=15)
                 inicio += timedelta(days=1)
-                inicio -= timedelta(minutes=self.tiempos["bloques"]*15)
+                inicio -= timedelta(minutes=self.tiempos["bloques"] * 15)
             inicio += timedelta(days=self.tiempos["dias_sin_trabajar"])
-        asignacion = {}
+
         for f in calendario:
-            asignacion[str(f)] = {"sillones_desocupados": copy(self.sillones),
-                                  "enfermeras_desocupadas": copy(self.enfermeras)}
+            asignacion[str(f)] = {"sillones_desocupados": s.extend(self.sillones),
+                                  "enfermeras_desocupadas": e.extend(self.enfermeras)}
         self.calendario = asignacion
 
     # se crea una lista con todos los pacientes que llegaron durante la semana
@@ -164,7 +169,7 @@ class Hospital:
 if __name__ == "__main__":
     h1 = Hospital(recursos_h2, lambda_poisson_h2, tiempo_h2)
     print("ESTOS SON LOS RECURSOS DEL HOSPITAL:")
-    print("CALEDARIO:\n", h1.calendario.keys(), len(h1.calendario))
+    print("CALEDARIO:\n", h1.calendario, len(h1.calendario))
     print("ENFERMERAS:\n", h1.enfermeras, len(h1.enfermeras))
     print("SILLONES:\n", h1.sillones, len(h1.sillones))
     h1.llegadas_semana()
