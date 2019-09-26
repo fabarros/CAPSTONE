@@ -161,9 +161,22 @@ class Hospital:
     # esto es un for que toma cada paciente que llego en la semana
     # y lo va asignando (se modifica su protocolo y el calendario del hospital)
     # para ordenar el self.llegadas_durante_semana usamos lista.sort(key=lambda x: x.tiempo_espera, reverse=False)
-    def asignar_llegadas(self):
+    def asignar_llegadas(self, tiempo_simulacion):
         self.llegadas_durante_semana.sort(key=lambda x: x.tiempo_espera, reverse=False)
-        print(self.llegadas_durante_semana)
+        for paciente in self.llegadas_durante_semana:
+            i = self.llegadas_durante_semana.index(paciente)
+            for sesion in paciente.protocolo:
+                tiempo_simulacion += sesion[0]
+                for bloque in range(self.tiempos["bloques"]):
+                    # si no estan vacias las listas de sillones y enfereras
+                    if not (self.calendario[str(tiempo_simulacion)]["sillones_disponibles"].is_empty()
+                            and self.calendario[str(tiempo_simulacion)]["enfermeras_disponibles"].is_empty()):
+                        pass
+                    # si alguna esta vacía pasamos al siguiente bloque
+                    else:
+                        tiempo_simulacion += timedelta(minutes=15)
+
+
 
 
 if __name__ == "__main__":

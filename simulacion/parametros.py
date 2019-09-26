@@ -4,14 +4,14 @@ from datetime import *
 peso_protocolo_1 = 0.83
 
 # peso de los tiempos maximos de espera
-peso_tiempo_0 = 0.2
-peso_tiempo_2 = 0.4
-peso_tiempo_3 = 0.4
+peso_tiempo_0 = 0.25
+peso_tiempo_2 = 0.62
+peso_tiempo_3 = 0.13
 
 # tiempos laborales
-tiempo_h1 = {"bloques": 53,"dias_sin_trabajar": 2}
-tiempo_h2 = {"bloques": 53,"dias_sin_trabajar": 1}
-tiempo_h3 = {"bloques": 53,"dias_sin_trabajar": 2}
+tiempo_h1 = {"bloques": 52,"dias_sin_trabajar": 2}
+tiempo_h2 = {"bloques": 52,"dias_sin_trabajar": 1}
+tiempo_h3 = {"bloques": 52,"dias_sin_trabajar": 2}
 
 
 # parámetros de poissons

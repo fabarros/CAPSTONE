@@ -4,6 +4,8 @@
     <list default="true" id="ecc2cc74-ff19-454b-8049-0619b4d5f578" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hospital.py" beforeDir="false" afterPath="$PROJECT_DIR$/hospital.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/motor_simulacion.py" beforeDir="false" afterPath="$PROJECT_DIR$/motor_simulacion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parametros.py" beforeDir="false" afterPath="$PROJECT_DIR$/parametros.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
