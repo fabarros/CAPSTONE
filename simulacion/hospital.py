@@ -54,7 +54,8 @@ class Hospital:
                 e = copy(self.enfermeras)
                 for k in range(self.tiempos["bloques"]): # existen 51 bloques de a 15 minutos por dia (hasta las 20:45-21:00 hrs)
                     asignacion[str(inicio)] = {"sillones_desocupados": s,
-                                               "enfermeras_desocupadas": e}
+                                               "enfermeras_desocupadas": e,
+                                               "pacientes": []}
                     inicio += timedelta(minutes=15)
                 inicio += timedelta(days=1)
                 inicio -= timedelta(minutes=self.tiempos["bloques"] * 15)
@@ -180,11 +181,12 @@ class Hospital:
 
 
 if __name__ == "__main__":
-    h1 = Hospital(recursos_h2, lambda_poisson_h2, tiempo_h2)
+    h1 = Hospital(recursos_h1, lambda_poisson_h1, tiempo_h1)
     print("ESTOS SON LOS RECURSOS DEL HOSPITAL:")
     print("CALEDARIO:\n", h1.calendario, len(h1.calendario))
     print("ENFERMERAS:\n", h1.enfermeras, len(h1.enfermeras))
     print("SILLONES:\n", h1.sillones, len(h1.sillones))
     h1.llegadas_semana()
     print("PACIENTES EN LA SEMANA:\n", h1.llegadas_durante_semana, len(h1.llegadas_durante_semana))
-    h1.asignar_llegadas()
+    for paciente in h1.llegadas_durante_semana:
+        print(paciente.protocolo)

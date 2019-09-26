@@ -30,7 +30,7 @@ class Enfermera:
     def __init__(self):
         self.id = Enfermera.id
         Enfermera.id += 1
-        self.pacientes_del_dia = 0
+        self.pacientes_actuales = []
 
     def __repr__(self):
         ret = "Enfermera  " + str(self.id)
